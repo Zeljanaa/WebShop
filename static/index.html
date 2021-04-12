@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Ukljucivanje css-a -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <title>Prodavnica</title>
+</head>
+
+<!-- Ukljucivanje u Body APP sa ng-app -->
+<body ng-app="app" class="bg-info">
+    <div class="container mt-3" ng-controller="loginCtrl as lc" >
+        <div id="loaderDiv" loader>
+            <img src="spinner.gif" class="ajax-loader"/>
+        </div>
+        <nav ng-if="lc.isAuth()" class="navbar navbar-expand-sm navbar-light bg-light border border-secondary rounded m-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" ui-sref="home">Pocetna</a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navDivCollapse"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navDivCollapse">
+                    <ul ng-if="lc.isAuth()" class="navbar-nav">
+                        <!-- <li class="nav-item">
+                            <a ui-sref="artikla" class="nav-link" style="cursor: pointer;">Artikli</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a ui-sref="korisnici" class="nav-link" style="cursor: pointer;">Korisnici</a>
+                        </li>
+                        <div ng-controller="prodavnicaCtrl as mc">
+                            <li  ng-if="mc.ulogovaniKorisnik.uloga !== 'admin'" class="nav-item">
+                                <a ui-sref="kupovina" class="nav-link" style="cursor: pointer;">Kupovina</a>
+                            </li>
+                        </div>                        
+                    </ul>
+                    <ul class="navbar-nav ml-auto mr-5">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" style="cursor: pointer;"></a>
+                            <div class="dropdown-menu">
+                                <a ng-click="lc.logoutHandler()" ui-sref="login" class="dropdown-item" style="cursor: pointer;">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Direktiva za viewove -->
+    <div class="container mt-5">
+        <ui-view></ui-view>
+    </div>
+    <div class="my-5" style="height: 2em;"></div>
+
+    <!-- Ukljucivanje skripti za bootstrap popper i jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/popper.min.js"></script>
+    <script src="scripts/bootstrap.bundle.min.js"></script> -->
+
+    <!-- Ukljucivanje skripti za Angular -->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-ui-router.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="app/components/prodavnica/prodavnicaCtrl.js"></script>
+    <script src="app/components/artikla/artiklaCtrl.js"></script>
+    <script src="app/components/korisnici/korisniciCtrl.js"></script>
+    <script src="app/components/korisnik/korisnikCtrl.js"></script>
+    <script src="app/components/login/loginCtrl.js"></script>
+    <script src="app/components/kupovina/kupovinaCtrl.js"></script>
+    <script src="app/components/registracija/registracijaCtrl.js"></script>
+
+</body>
+
+</html>

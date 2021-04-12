@@ -1,0 +1,13 @@
+<div class="container" ng-if="!lc.isAuth()" ng-controller="loginCtrl as lc">
+    <form class="form-inline" ng-submit="lc.login()">
+        <div class="form-group">
+            <input type="text" placeholder="Korisnicko ime" class="form-control mr-sm-2" ng-model="lc.user.username" required>
+            <input type="password" placeholder="Lozinka" class="form-control mr-sm-2" ng-model="lc.user.password" required>
+            <input class="form-control" type="submit" value="Prijava" class="btn btn-warning btn">
+        </div>                    
+    </form>
+    <div class="alert alert-primary mt-3 ml-5" role="alert" ng-controller="loginCtrl as lc">
+        <h6>Da li imate nalog?</h6>
+        <a ui-sref="registracija" style="cursor: pointer;">Registrujte se</a>
+    </div>
+</div>

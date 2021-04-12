@@ -1,0 +1,64 @@
+<div ng-if="kuc.prozivodi.length > 0">
+    <form>
+        <div class="form-group">
+            <label for="proizvod">Prozivod: </label>
+            <select class="form-control" name="proizvod" ng-click="kuc.dobaviIzabraniProizvod($event)" id="proizvod" ng-model="kuc.nazivProizvoda" required>
+                <option ng-repeat="proizvod in kuc.prozivodi" [value]="proizvod.naziv">{{proizvod.naziv}}</option>
+            </select>
+        </div>
+        <div ng-if="kuc.izabraniProizvod">
+            <p>Kolicina na stanju: {{kuc.izabraniProizvod.kolicina}}</p>
+            <label for="kolicina">Količina</label>
+            <input type="number" class="form-control" id="kolicina" placeholder="Količina" ng-model="kuc.novoNarucivanje.kolicina" min="1" max={{kuc.izabraniProizvod.kolicina}} required>
+            <button ng-click="kuc.dodajUKorpu()" class="btn btn-primary my-3">Dodaj u korpu</button>
+        </div>
+    </form>
+</div>
+
+<!-- Forma za dodavanje robe  -->
+<div class="my-3" ng-if="kuc.korpa.length > 0">
+    <h6>U korpi:</h6>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Kolicina</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="uKorpi in kuc.korpa">
+                <td>{{uKorpi.naziv}}</td>
+                <td>{{uKorpi.izabranaKolicina}} </td>
+                <td><button class="btn btn-danger btn-sm" ng-click="kuc.ukloniIzKorpe(uKorpi.idartikli)"><i class="fas fa-trash-alt"></i>Ukloni</button></td>
+            </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+    <button class="btn btn-primary mt-2 mb-4" ng-click="kuc.plati()">Plati</button>
+</div>
+<div class="my-4" ng-if="kuc.kupljeno.length > 0">
+    <h6>Kupljeno:</h6>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Kolicina</th>
+                <th>Datum</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="uKupljeno in kuc.kupljeno">
+                <td>{{uKupljeno.naziv}}</td>
+                <td>{{uKupljeno.kolicina_kupljena}} </td>
+                <td>{{uKupljeno.datum}} </td>
+            </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>

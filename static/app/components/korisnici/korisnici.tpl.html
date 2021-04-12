@@ -1,0 +1,70 @@
+<!-- Forma za dodaovanje novog korisnika -->
+<div>
+    <div ng-if="kc.ulogovaniKorisnik.uloga === 'admin'" class="mb-3">
+        <form ng-submit="kc.dodajKorisnika()">
+            <div class="form-group">
+                <label for="korisnicko_ime">Korisničko ime</label>
+                <input type="text" class="form-control" id="korisnicko_ime" placeholder="Username" ng-model="kc.noviKorisnik.korisnicko_ime"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="ime">Ime</label>
+                <input type="text" class="form-control" id="ime" placeholder="Ime" ng-model="kc.noviKorisnik.ime"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="prezime">Prezime</label>
+                <input type="text" class="form-control" id="prezime" placeholder="Prezime" ng-model="kc.noviKorisnik.prezime"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="lozinka">Lozinka</label>
+                <input type="text" class="form-control" id="lozinka" placeholder="Lozinka" ng-model="kc.noviKorisnik.lozinka"
+                    >
+            </div>
+            <div class="form-group">
+                <label for="uloga">Uloga: </label>
+                <select class="form-control" name="uloga" ng-model="kc.noviKorisnik.uloga" id="uloga" required>
+                    <option ng-repeat="uloga in kc.uloge" [value]="uloga">{{uloga}}</option>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Dodaj">
+        </form>
+    </div>
+
+<!-- Forma za ispisivanje korisnika na serveru -->
+
+    <div ng-if="kc.korisnici.length > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>R. br.</th>
+                    <th>Korisnicko_ime</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Uloga</th>
+                    <th class="text-right">Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="korisnik in kc.korisnici">
+                    <td>{{$index+1}}.</td>
+                    <td>{{korisnik.korisnicko_ime}}</td>
+                    <td>{{korisnik.ime}}</td>
+                    <td>{{korisnik.prezime}}</td>
+                    <td>{{korisnik.uloga}}</td>
+                    <td class="text-right">
+                        <button ng-if="kc.ulogovaniKorisnik.uloga === 'admin'" class="btn btn-danger btn-sm mb-2" ng-click="kc.ukloniKorisnika(korisnik.id)"><i class="fas fa-trash-alt"></i>Ukloni</button>
+                        <a ui-sref="korisnik({id: korisnik.id})" class="btn btn-primary btn-sm"><i class="far fa-eye"></i>Detalji</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+    
+            </tfoot>
+        </table>
+    </div>
+    <div class="text-center" ng-if="kc.korisnici.length == 0 && kc.dobavljeniPodaci">
+        <p class="font-italic">Vi ste jedini korisnik :(</p>
+    </div>
+</div>
