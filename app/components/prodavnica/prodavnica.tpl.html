@@ -1,0 +1,121 @@
+<div>
+    <!-- FORMA ZA DODAVANJE ROBE -->
+    <div ng-if="mc.ulogovaniKorisnik.uloga === 'admin'" class="mb-3">
+        <form ng-submit="mc.dodajRobu()">
+            <div class="form-group">
+                <label for="naziv">Naziv: </label>
+                <input type="text" class="form-control" id="naziv" placeholder="Naziv"  ng-model="mc.novaRoba.naziv">
+            </div>
+            <div class="form-group">
+                <label for="kolicina">Kolicina: </label>
+                <input type="number" class="form-control" id="kolicina" placeholder="Kolicina"  ng-model="mc.novaRoba.kolicina" required>
+            </div>
+            <div class="form-group">
+                <label for="opis">Opis</label>
+                <input type="text" class="form-control" id="opis" placeholder="Opis"  ng-model="mc.novaRoba.opis">
+            </div>
+            <input type="submit" value="Dodaj" class="btn btn-primary">
+        </form>
+        <hr>
+    </div>
+
+    <div ng-if="mc.roba.length > 0">
+        <!-- FORMA ZA SORTIRANJE ROBE -->
+        <div class="mb-3">
+            <form ng-submit="mc.dobaviRobu()">
+                <div class="form-group">
+                    <label for="naziv">Naziv</label>
+                    <input type="text" class="form-control" id="naziv_artikli" placeholder="Naziv" ng-model="mc.parametriPretrage.naziv">
+                </div>
+                <div class="form-group">
+                    <label for="kolicinaOd">Minimalna količina</label>
+                    <input type="number" class="form-control" id="kolicinaOd" placeholder="Minimalna količina" ng-model="mc.parametriPretrage.kolicinaOd">
+                </div>
+                <div class="form-group">
+                    <label for="kolicinaDo">Maksimalna količina</label>
+                    <input type="number" class="form-control" id="kolicinaDo" placeholder="Maksimalna količina" ng-model="mc.parametriPretrage.kolicinaDo">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Pretraga">
+            </form>
+        </div>
+
+    <!-- Forma za sortiranje robe -->
+
+        <hr ng-if="!mc.pretragaPoParametrima || (mc.pretragaPoParametrima && mc.robaSaParametrimaPretrage.length > 1)">
+        <div ng-if="!mc.pretragaPoParametrima || (mc.pretragaPoParametrima && mc.robaSaParametrimaPretrage.length > 1)" class="mb-3">
+            <div class="alert alert-primary" role="alert">
+                <h5>Sortiraj po : </h5>
+                <select ng-click="mc.showPretraguSaParametrima()" ng-model="mc.sortColumn" class="custom-select">
+                    <option value="naziv">Naziv</option>
+                    <option value="-kolicina">Kolicina (opadajuce)</option>
+                    <option value="+kolicina">Kolicina (rastuce)</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <!-- PREGLED ROBE -->
+        <h3>Roba</h3>
+        <div ng-if="!mc.pretragaPoParametrima">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>R. br.</th>
+                        <th>Naziv</th>
+                        <th>Kolicina</th>
+                        <th>Opis</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="artikla in mc.roba | orderBy:mc.sortColumn">
+                        <td>{{$index+1}}</td>
+                        <td>{{artikla.naziv}}</td>
+                        <td>{{artikla.kolicina}}</td>
+                        <td>{{artikla.opis}}</td>
+                        <td>
+                            <button ng-if="mc.ulogovaniKorisnik.uloga === 'admin'" class="btn btn-danger btn-sm" ng-click="mc.ukloniRobu(artikla.idartikli)"><i class="fas fa-trash-alt"></i>Ukloni</button>
+                            <a ng-click="mc.navigateToArtikal(artikla.id)" ui-sref="artikal({id: artikla.idartikli})" class="btn btn-primary btn-sm"><i class="far fa-eye"></i>Detalji</a>
+                            <!-- <a ng-click="mc.navigateToArtikal(artikla.idartikli)" class="btn btn-primary btn-sm"><i class="far fa-eye"></i>Detalji</a> -->
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+    
+                </tfoot>
+            </table>
+        </div>
+        <div ng-if="mc.pretragaPoParametrima && mc.robaSaParametrimaPretrage.length == 0">
+            <p>Nije pronadjen proizvod koji odgovara parametrima pretrage.</p>
+        </div>
+        <div ng-if="mc.pretragaPoParametrima && mc.robaSaParametrimaPretrage.length > 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>R. br.</th>
+                        <th>Naziv</th>
+                        <th>Kolicina</th>
+                        <th>Opis</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="artikla in mc.robaSaParametrimaPretrage | orderBy:mc.sortColumn">
+                        <td>{{$index+1}}</td>
+                        <td>{{artikla.naziv}}</td>
+                        <td>{{artikla.kolicina}}</td>
+                        <td>{{artikla.opis}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" ng-if="mc.ulogovaniKorisnik.uloga === 'admin'" ng-click="mc.ukloniRobu(artikla.idartikli)"><i class="fas fa-trash-alt"></i>Ukloni</button>
+                            <a ng-click="mc.navigateToArtikal(artikla.id)" ui-sref="artikal({id: artikla.idartikli})" class="btn btn-primary btn-sm"><i class="far fa-eye"></i>Detalji</a>
+                            <!-- <a ng-click="mc.navigateToArtikal(artikla.idartikli)" class="btn btn-primary btn-sm"><i class="far fa-eye"></i>Detalji</a> -->
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+    
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <p ng-if="mc.roba.length == 0 && mc.dobavljeniPodaci">Prodavnica je prazna</p>
+</div>

@@ -1,0 +1,33 @@
+<!-- Forma za registraciju novog korisnika -->
+<hr>
+<div>
+    <div class="mb-3">
+        <form ng-submit="rc.registration()">
+            <div class="form-group">
+                <label for="korisnicko_ime">Korisnicko ime: </label>
+                <input type="text" class="form-control" id="korisnicko_ime" placeholder="Korisnicko ime" ng-model="rc.noviKorisnik.korisnicko_ime" required>
+            </div>
+            <div class="form-group">
+                <label for="lozinka">Lozinka: </label>
+                <input type="password" class="form-control" id="lozinka" placeholder="Lozinka" ng-model="rc.noviKorisnik.lozinka" required> 
+            </div>
+            <div class="form-group">
+                <label for="ime">Ime: </label>
+                <input type="text" class="form-control" id="ime" placeholder="Ime" ng-model="rc.noviKorisnik.ime" required>
+            </div>
+            <div class="form-group">
+                <label for="prezime">Prezime: </label>
+                <input type="text" class="form-control" id="prezime" placeholder="Prezime" ng-model="rc.noviKorisnik.prezime" required>
+            </div>
+            <!-- <div class="form-group">
+                <label for="uloga">Uloga: </label>
+                <select class="form-control" name="uloga" id="uloga" ng-model="rc.noviKorisnik.uloga" required>
+                    <option ng-repeat="uloga in rc.uloge" [value]="uloga">{{uloga}}</option>
+                </select>
+            </div> -->
+            <input type="submit" value="Registrujte se" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" ui-sref="login">Povratak na login</button>
+        </form>
+    </div>
+</div>
+<hr>
